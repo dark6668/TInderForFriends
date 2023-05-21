@@ -1,0 +1,144 @@
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 1000px;
+
+}
+img{
+width: 400px;
+padding: 100px 100px 0px;
+
+}
+.form-flex{
+    display: flex;
+    flex-direction: column;
+ gap: 10px;
+background-color: aqua;
+ text-align: start;
+ border-radius: 5%;
+}
+.info{
+    display: flex;
+ 
+font-size: 20px;
+    justify-content: center;
+    padding-bottom: 100px;
+    
+}
+.user-info{
+    display: flex;
+    flex-direction: column;
+}
+ .password-info{
+    display: flex;
+text-align: start;
+justify-content: space-between;
+
+} 
+.password-info label{
+margin-right: 100px;
+}
+input{
+    margin: 3px 0 3px;
+width: fit-content;
+height: 20px;
+gap: 0;
+}
+.button{
+width: 182px;
+    height: 30px;
+    background-color: yellow;
+}
+.checkbox{
+
+    display: flex;
+gap: 10px;
+}
+/*page 1`*/
+
+.header-row{
+    display: flex;
+    justify-content: space-between;
+ box-shadow:  inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+ 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);;
+ 
+}
+.img-skull{
+
+    display: flex;
+
+
+}
+.img-skull img{
+  display: block;
+  margin: 0;
+   margin-top: 0px;
+height: 80px;
+width: 80px;
+padding: 0px;
+
+}
+.flex-column{
+
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+    align-items: center;
+ 
+    gap: 10px;
+width: 100px;
+height: 80px;
+}
+.flex-column-items{
+    height: 7px;
+    width: 40px;
+    background-color: black;
+}
+
+#h1{
+position: absolute;
+
+width: 700px;
+height: 2500px;
+
+
+
+}
+#h1:hover{
+    display:  none ;
+
+}
+.user-info-container{
+position: absolute;
+background-color: grey;
+
+margin-left: 2050px;
+align-items: center;
+flex-direction: column;
+width: 476px;
+height: 1000px;
+
+}
+#user-img{
+
+    width: 40px;
+    height: 40px;
+}
+.user-info-container .flex-column{
+
+
+margin-left: 400px;
+}
+
+.list-grid{
+
+
+   display: grid;
+   justify-content: center;
+   grid-template-columns: 60px;
+   align-items: center;
+   height: 1000px;
+}
