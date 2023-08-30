@@ -1,15 +1,13 @@
-
-const {CRUD} =require("../CRUD")
+const { CRUD } = require("../CRUD");
 
 class Users extends CRUD {
 	constructor() {
 		super("users");
 	}
 
-async  getUsers(){
-    console.log(1);
-}
-
+	async getUsers() {
+		console.log(1);
+	}
 }
 module.exports = {
 	Users,

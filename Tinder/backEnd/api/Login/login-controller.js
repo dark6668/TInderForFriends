@@ -1,6 +1,4 @@
-
-
-async function Login(){
-    console.log(1);
+async function Login() {
+	console.log(1);
 }
-module.exports = {Login};
+module.exports = { Login };
