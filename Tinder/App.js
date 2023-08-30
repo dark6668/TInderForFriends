@@ -1,71 +1,117 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect } from "react";
+import { Button, View } from "react-native";
+import { API_URL } from "@env";
 
 import DeckSwiper from "./src/component/Swiper";
+
+
+
+
+
 const users = [
+
 	{
-		name: "Eleanor Mitchell",
-		age: 35,
-		img: "https://shorturl.at/abvT1",
-		instagram: "@EleanorTheDude",
-		activity: "dance",
-	},
-	{
-		name: "Sophia Johnson",
+		fullName: "Sophia Johnson",
 		age: 28,
-		img: "https://shorturl.at/emQ46",
+		ProfileImage: "https://shorturl.at/emQ46",
 		instagram: "@SophiaJourney",
 		activity: "play basketball",
 	},
 	{
-		name: "Daniel Parker",
+		fullName: "Daniel Parker",
 		age: 30,
-		img: "https://shorturl.at/AKPWY",
+		ProfileImage: "https://shorturl.at/AKPWY",
 		instagram: "@DanielP_Fiction",
 		activity: "gossip about the neighbors",
 	},
 	{
-		name: "Olivia Anderson",
+		fullName: "Olivia Anderson",
 		age: 25,
-		img: "https://shorturl.at/uCVY3",
+		ProfileImage: "https://shorturl.at/uCVY3",
 		instagram: "@OliviaCreates",
 		activity: "jump on one leg",
 	},
 	{
-		name: "Sophia Ramirez",
+		fullName: "Sophia Ramirez",
 		age: 28,
-		img: "https://shorturl.at/wLR57",
+		ProfileImage: "https://shorturl.at/wLR57",
 		instagram: "@SophiaRamirezArt",
 		activity: "Painting vibrant landscapes",
 	},
 	{
-		name: "Liam Miller",
+		fullName: "Liam Miller",
 		age: 25,
-		img: "https://shorturl.at/lmzE7",
+		ProfileImage: "https://shorturl.at/lmzE7",
 		instagram: "@LiamTheDude",
 		activity: "write code",
 	},
 	{
-		name: "Mary Mouser",
+		fullName: "Mary Mouser",
 		age: 27,
-		img: "https://rb.gy/uhq2j",
+		ProfileImage: "https://rb.gy/uhq2j",
 		instagram: "@missmarymmouser",
-		activity: "live in a haunted house ",
+		activity: "live in a haunted house ",	
 	},
 	{
-		name: "Peyton List",
+		fullName: "Peyton List",
 		age: 25,
-		img: "https://www.themoviedb.org/t/p/w500/5p8KwRgBUYVcKBKTYFdD30o6dAc.jpg",
+		ProfileImage: "https://www.themoviedb.org/t/p/w500/5p8KwRgBUYVcKBKTYFdD30o6dAc.jpg",
 		instagram: "@peytonlist",
 		activity: "modeling",
 	},
 ];
 export default function App() {
-	const [listOfUser, setListOfuser] = React.useState(users);
+	const [userData,setUserData] =React.useState([])
+	useEffect(()=>{
+		getUserData()
+		
+		},[])
 
+
+		const getUserData=async()=>{
+			try{
+				await fetch(`${API_URL}/users/getUsers`,{
+					method: 'POST',
+					body: JSON.stringify({id:"id"}),
+					headers: {
+					  'Content-Type': 'application/json; charset=UTF-8',
+					},
+				  }).then((response)=>{
+					if (response.status !== 200) {
+						throw new Error('Network request failed or received an unexpected response');
+					}
+					response.json().then((result)=>{
+						data = result.map((item)=>{
+							return{
+								fullName: item.FullName,
+								age: item.age,
+								ProfileImage: item.ProfileImage,
+								instagram: item.instagram,
+								activity: "play basketball",
+
+
+							}
+						
+						}) 
+					
+					
+						setUserData(data)
+						
+					})
+				  })
+					
+			}
+			catch(Err){
+				console.log(Err);
+			}
+	
+		}
 	return (
 		<View>
-			<DeckSwiper users={users} />
+			{
+				userData.length > 0&&<DeckSwiper userData={userData}  />
+			}
+			
 		</View>
 	);
 }
