@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { Button, SafeAreaView, View } from "react-native";
 import { API_URL } from "@env";
 
-import DeckSwiper from "./src/component/Swiper";
+import MainSwiper from "./src/component/Swiper";
 
 export default function App() {
 	const [userData, setUserData] = React.useState([]);
@@ -42,7 +42,18 @@ export default function App() {
 			console.log(Err);
 		}
 	};
+
 	return (
-		<View>{userData.length > 0 && <DeckSwiper userData={userData} />}</View>
+		<SafeAreaView>
+			<View>
+				{/* 			
+			{userData.length > 0 && <DeckSwiper userData={userData} />
+		
+
+			
+			} */}
+				{userData.length > 0 && <MainSwiper userData={userData} />}
+			</View>
+		</SafeAreaView>
 	);
 }
