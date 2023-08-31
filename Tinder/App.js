@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
-import { Button, SafeAreaView, View } from "react-native";
+import { Text, SafeAreaView, View, StyleSheet, Alert } from "react-native";
 import { API_URL } from "@env";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MainSwiper from "./src/component/Swiper";
+import BottomMenu from "./src/component/BottomMenu";
+const Tab = createBottomTabNavigator();
 
 export default function App() {
 	const [userData, setUserData] = React.useState([]);
+	const [showSwiper, setShowSwiper] = React.useState(true);
+
 	useEffect(() => {
 		getUserData();
 	}, []);
@@ -27,6 +33,7 @@ export default function App() {
 				response.json().then((result) => {
 					data = result.map((item) => {
 						return {
+							PersonID: item.PersonID,
 							fullName: item.FullName,
 							age: item.age,
 							ProfileImage: item.ProfileImage,
@@ -34,7 +41,6 @@ export default function App() {
 							activity: "play basketball",
 						};
 					});
-
 					setUserData(data);
 				});
 			});
@@ -43,17 +49,34 @@ export default function App() {
 		}
 	};
 
+	const closeSwiper = () => {
+		setShowSwiper(false);
+	};
 	return (
 		<SafeAreaView>
-			<View>
-				{/* 			
-			{userData.length > 0 && <DeckSwiper userData={userData} />
-		
-
-			
-			} */}
-				{userData.length > 0 && <MainSwiper userData={userData} />}
+			<View style={styles.body}>
+				{userData.length > 0 && showSwiper ? (
+					<MainSwiper userData={userData} closeSwiper={closeSwiper} />
+				) : (
+					<View
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							height: "100%",
+						}}
+					>
+						<Text style={{ fontSize: 24 }}>Nothing To See</Text>
+					</View>
+				)}
 			</View>
+
+			<BottomMenu />
 		</SafeAreaView>
 	);
 }
+const styles = StyleSheet.create({
+	body: {
+		backgroundColor: "#4fd0e9",
+	},
+});

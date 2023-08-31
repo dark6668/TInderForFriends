@@ -16,7 +16,12 @@ export default function MainSwiper(props) {
 				</View>
 				<View style={styles.containerInstagram}>
 					<Text style={styles.text}>{user.instagram}</Text>
-					<AntDesign name="infocirlceo" size={24} color="white" />
+					<AntDesign
+						name="infocirlceo"
+						size={24}
+						color="white"
+						onPress={() => {}}
+					/>
 				</View>
 				<Text style={styles.text}>{user.activity}</Text>
 			</View>
@@ -50,147 +55,132 @@ export default function MainSwiper(props) {
 		console.log(`You disLike: ${disLike}`);
 
 		console.log(`You Liked: ${liked}`);
-		setShowSwiper(false);
+		props.closeSwiper();
 	};
 
 	return (
 		<SafeAreaView>
-			{console.log(showSwiper)}
-			{showSwiper ? (
-				<View>
-					<Swiper
-						ref={swiperRef}
-						cards={props.userData}
-						cardIndex={currentIndex}
-						renderCard={renderCard}
-						onSwiped={handleSwiped}
-						infinite={false}
-						onSwipedLeft={dislike}
-						onSwipedRight={like}
-						onSwipedAll={end}
-						disableBottomSwipe={true}
-						disableTopSwipe={true}
-						overlayLabels={{
-							left: {
-								title: "NOPE",
-								style: {
-									label: {
-										backgroundColor: "red",
-										borderColor: "red",
-										color: "white",
-										borderWidth: 1,
-										fontSize: 24,
-										position: "absolute",
-										left: 50,
-									},
-									wrapper: {
-										flexDirection: "column",
-										alignItems: "flex-end",
-										justifyContent: "flex-start",
-										marginTop: 20,
-										marginLeft: -20,
-									},
+			<View>
+				<Swiper
+					style={styles.body}
+					ref={swiperRef}
+					cards={props.userData}
+					cardIndex={currentIndex}
+					renderCard={renderCard}
+					onSwiped={handleSwiped}
+					infinite={false}
+					onSwipedLeft={dislike}
+					onSwipedRight={like}
+					onSwipedAll={end}
+					disableBottomSwipe={true}
+					disableTopSwipe={true}
+					overlayLabels={{
+						left: {
+							title: "NOPE",
+							style: {
+								label: {
+									backgroundColor: "red",
+									borderColor: "red",
+									color: "white",
+									borderWidth: 1,
+									fontSize: 24,
+									position: "absolute",
+									left: 50,
+								},
+								wrapper: {
+									flexDirection: "column",
+									alignItems: "flex-end",
+									justifyContent: "flex-start",
+									marginTop: 20,
+									marginLeft: -20,
 								},
 							},
-							right: {
-								title: "LIKE",
-								style: {
-									label: {
-										position: "absolute",
-										right: 40,
-										backgroundColor: "blue",
-										borderColor: "blue",
-										color: "white",
-										borderWidth: 1,
-										fontSize: 24,
-									},
-									wrapper: {
-										flexDirection: "column",
-										alignItems: "flex-start",
-										justifyContent: "flex-start",
-										marginTop: 20,
-										marginLeft: 20,
-									},
+						},
+						right: {
+							title: "LIKE",
+							style: {
+								label: {
+									position: "absolute",
+									right: 40,
+									backgroundColor: "blue",
+									borderColor: "blue",
+									color: "white",
+									borderWidth: 1,
+									fontSize: 24,
+								},
+								wrapper: {
+									flexDirection: "column",
+									alignItems: "flex-start",
+									justifyContent: "flex-start",
+									marginTop: 20,
+									marginLeft: 20,
 								},
 							},
+						},
+					}}
+				/>
+				<View style={styles.IconsButton}>
+					<MaterialCommunityIcons.Button
+						name="close"
+						size={65}
+						backgroundColor="transparent"
+						underlayColor="transparent"
+						activeOpacity={0.3}
+						color={"red"}
+						onPress={() => {
+							swiperRef.current.swipeLeft();
 						}}
 					/>
-					<View style={styles.IconsButton}>
-						<MaterialCommunityIcons.Button
-							name="close"
-							size={94}
-							backgroundColor="transparent"
-							underlayColor="transparent"
-							activeOpacity={0.3}
-							color={"red"}
-							onPress={() => {
-								swiperRef.current.swipeLeft();
-							}}
-						/>
-						<MaterialCommunityIcons
-							name="heart"
-							size={94}
-							backgroundColor="transparent"
-							underlayColor="transparent"
-							activeOpacity={0.3}
-							color={"red"}
-							marginTop={10}
-							onPress={() => swiperRef.current.swipeRight()}
-						/>
-					</View>
+					<MaterialCommunityIcons
+						name="heart"
+						size={65}
+						backgroundColor="transparent"
+						underlayColor="transparent"
+						activeOpacity={0.3}
+						color={"red"}
+						marginTop={10}
+						onPress={() => swiperRef.current.swipeRight()}
+					/>
 				</View>
-			) : (
-				<View
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-						height: "100%",
-					}}
-				>
-					<Text style={{ fontSize: 24 }}>Nothing To See</Text>
-				</View>
-			)}
+			</View>
 		</SafeAreaView>
 	);
 }
 const styles = StyleSheet.create({
+	Swiper: { backgroundColor: "red" },
+
+	body: {
+		backgroundColor: "red",
+		borderWidth: 2022,
+	},
 	container: {
 		display: "flex",
-		height: 4500,
-		zIndex: 1,
 		flex: 1,
-	},
-
-	buttonText: {
-		color: "white",
-		fontSize: 20,
-		zIndex: 3,
-		position: "absolute",
+		marginTop: -55,
 	},
 
 	cardImge: {
 		flex: 1,
-		height: 100,
+		height: 20,
 	},
 	containerInfo: {
 		display: "flex",
 		position: "absolute",
-
 		textAlign: "center",
 
 		width: 250,
-		top: "80%",
+		top: "70%",
 		left: 80,
 		gap: 10,
 	},
 	containerInfoFlex: {
 		display: "flex",
+
 		flexDirection: "row-reverse",
 		gap: 20,
 	},
 	text: {
-		color: "white",
+		color: "#4FD0E9",
 		fontSize: 20,
 	},
 	containerInstagram: {
@@ -199,9 +189,12 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	IconsButton: {
-		marginTop: 700,
+		marginTop: 640,
+		marginRight: 30,
+		height: 90,
+		width: 350,
 		display: "flex",
-		flexDirection: "row",
+		flexDirection: "row-reverse",
 		justifyContent: "space-between",
 		textAlign: "center",
 	},

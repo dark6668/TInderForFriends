@@ -22,3 +22,11 @@ CREATE TABLE [activities] (
     FOREIGN KEY (ActiveID) REFERENCES activities(ActivitiesID),
     FOREIGN KEY (ResponsibleUserID) REFERENCES activities(ResponsiblePersonID)
 );  
+CREATE TABLE [friends] (
+  "ID" INT IDENTITY(1,1),
+  "UserID" INT,
+  "FriendID" INT,
+  FOREIGN KEY (UserID) REFERENCES [user](PersonID),
+  FOREIGN KEY (FriendID) REFERENCES [user](PersonID),
+  PRIMARY KEY (ID)
+);
