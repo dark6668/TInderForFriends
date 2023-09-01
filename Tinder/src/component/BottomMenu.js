@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function BottomMenu() {
 	const navigation = () => {
-		useNavigation.navigate("/home/david/repos/project/Tinder/App.js");
+		navigation.navigate("/2/3/3/3/3/App.js");
 	};
 	return (
 		<View style={styles.containerButtom}>

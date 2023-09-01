@@ -5,6 +5,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function MainSwiper(props) {
+	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const [liked, setLiked] = React.useState([]);
+	const [disLike, setdisLike] = React.useState([]);
+	const [showSwiper, setShowSwiper] = React.useState(true);
+	const swiperRef = React.useRef(currentIndex);
+
 	const renderCard = (user) => (
 		<View style={styles.container}>
 			<Image source={{ uri: user.ProfileImage }} style={styles.cardImge} />
@@ -27,12 +33,6 @@ export default function MainSwiper(props) {
 			</View>
 		</View>
 	);
-
-	const [currentIndex, setCurrentIndex] = React.useState(0);
-	const [liked, setLiked] = React.useState([]);
-	const [disLike, setdisLike] = React.useState([]);
-	const [showSwiper, setShowSwiper] = React.useState(true);
-	const swiperRef = React.useRef(currentIndex);
 
 	const handleSwiped = () => {
 		setCurrentIndex(currentIndex + 1);

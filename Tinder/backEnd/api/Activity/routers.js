@@ -1,5 +1,5 @@
 const express = require("express");
-const { Activities } = require("./activity-controller");
+const { Activities } = require("./controller");
 const activitiesCrudControler = new Activities("Activities");
 
 const router = express.Router();

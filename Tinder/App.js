@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
-import { Text, SafeAreaView, View, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { API_URL } from "@env";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MainSwiper from "./src/component/Swiper";
 import BottomMenu from "./src/component/BottomMenu";
-const Tab = createBottomTabNavigator();
 
 export default function App() {
-	const [userData, setUserData] = React.useState([]);
-	const [showSwiper, setShowSwiper] = React.useState(true);
-
 	useEffect(() => {
 		getUserData();
 	}, []);
+	const [userData, setUserData] = React.useState([]);
+	const [showSwiper, setShowSwiper] = React.useState(true);
 
 	const getUserData = async () => {
 		try {
@@ -27,7 +23,8 @@ export default function App() {
 			}).then((response) => {
 				if (response.status !== 200) {
 					throw new Error(
-						"Network request failed or received an unexpected response",
+						`Network request failed or received 
+						an unexpected response`,
 					);
 				}
 				response.json().then((result) => {

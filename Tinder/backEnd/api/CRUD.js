@@ -1,13 +1,15 @@
-const db = require(".././db-connection");
+const createDatabaseConnection = require("../db-connection");
 class CRUD {
 	constructor(collectionName) {
 		this.collectionName = collectionName;
 	}
 
-	async getAllData(req, res) {
+	async getAllData(req, res, errHandler) {
 		try {
-			const SELECT = `Select * FROM ${this.collectionName}`;
-			db.query(SELECT, (err, result) => {
+			const db = await createDatabaseConnection();
+
+			const SELECT_QUERY = `SELECT * FROM ${this.collectionName}`;
+			db.query(SELECT_QUERY, (err, result) => {
 				if (err) {
 					console.log(err);
 				} else {
@@ -15,33 +17,28 @@ class CRUD {
 				}
 			});
 		} catch (err) {
-			console.log(err);
-			res.status(500).send("Somthing went wrong");
+			errHandler(err);
 		}
 	}
 
-	// Activity            | varchar(100) | YES  |     | NULL    |                |
-	// | ActivityDate        | date         | YES  |     | NULL    |                |
-	// | ActivityLocation    | varchar(20)  | YES  |     | NULL    |                |
-	// | ResponsiblePersonID
-
 	async addToTables(res) {
 		try {
-			const INSERT = `INSERT INTO ${this.collectionName} (${column.join(
+			const INSERT_QUERY = `INSERT INTO ${this.collectionName} (${column.join(
 				", ",
 			)}) VALUES (${VALUES.join(", ")})`;
-			console.log(INSERT);
+			const db = await createDatabaseConnection();
+
 			db.query(INSERT, (err) => {
 				if (err) {
 					console.log(err);
-					return false;
+					throw new Error(err);
 				} else {
 					return true;
 				}
 			});
 		} catch (err) {
 			console.log(err);
-			res.status(500).send("Somthing went wrong");
+			throw new Error(err);
 		}
 	}
 }
