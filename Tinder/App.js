@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { API_URL } from "@env";
 
-import MainSwiper from "./src/component/Swiper";
-import BottomMenu from "./src/component/BottomMenu";
+import React from "react";
+
+import Navigation from "./src/component/Navigation";
 
 export default function App() {
-	useEffect(() => {
-		getUserData();
-	}, []);
-	const [userData, setUserData] = React.useState([]);
+	const [usersData, setUsersData] = React.useState([]);
 	const [showSwiper, setShowSwiper] = React.useState(true);
+	const [user, setUser] = React.useState([]);
 
-	const getUserData = async () => {
+	const getUsersData = async () => {
 		try {
 			await fetch(`${API_URL}/users/getUsers`, {
 				method: "POST",
@@ -30,15 +27,16 @@ export default function App() {
 				response.json().then((result) => {
 					data = result.map((item) => {
 						return {
-							PersonID: item.PersonID,
-							fullName: item.FullName,
+							PersonID: item.id,
+							fullName: item.full_name,
 							age: item.age,
-							ProfileImage: item.ProfileImage,
+							ProfileImage: item.profile_image,
 							instagram: item.instagram,
 							activity: "play basketball",
 						};
 					});
-					setUserData(data);
+
+					setUsersData(data);
 				});
 			});
 		} catch (Err) {
@@ -49,31 +47,21 @@ export default function App() {
 	const closeSwiper = () => {
 		setShowSwiper(false);
 	};
-	return (
-		<SafeAreaView>
-			<View style={styles.body}>
-				{userData.length > 0 && showSwiper ? (
-					<MainSwiper userData={userData} closeSwiper={closeSwiper} />
-				) : (
-					<View
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-							height: "100%",
-						}}
-					>
-						<Text style={{ fontSize: 24 }}>Nothing To See</Text>
-					</View>
-				)}
-			</View>
 
-			<BottomMenu />
-		</SafeAreaView>
+	const LogIn = (userInfo) => {
+		setUser(userInfo);
+		if (userInfo.length !== 0) {
+			getUsersData();
+		}
+	};
+
+	return (
+		<Navigation
+			user={user}
+			LogIn={LogIn}
+			usersData={usersData}
+			closeSwiper={closeSwiper}
+			showSwiper={showSwiper}
+		/>
 	);
 }
-const styles = StyleSheet.create({
-	body: {
-		backgroundColor: "#4fd0e9",
-	},
-});

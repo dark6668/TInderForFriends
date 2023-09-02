@@ -9,35 +9,37 @@ class CRUD {
 			const db = await createDatabaseConnection();
 
 			const SELECT_QUERY = `SELECT * FROM ${this.collectionName}`;
-			db.query(SELECT_QUERY, (err, result) => {
-				if (err) {
-					console.log(err);
-				} else {
-					res.status(200).send(result);
-				}
+			const result = await new Promise((resolve, reject) => {
+				db.query(SELECT_QUERY, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result);
+					}
+				});
 			});
+			return result;
 		} catch (err) {
-			errHandler(err);
+			throw new Error(err);
 		}
 	}
 
-	async addToTables(res) {
+	async addToTables(column, VALUES) {
 		try {
+			const db = await createDatabaseConnection();
+
 			const INSERT_QUERY = `INSERT INTO ${this.collectionName} (${column.join(
 				", ",
 			)}) VALUES (${VALUES.join(", ")})`;
-			const db = await createDatabaseConnection();
 
-			db.query(INSERT, (err) => {
+			db.query(INSERT_QUERY, (err) => {
 				if (err) {
-					console.log(err);
 					throw new Error(err);
 				} else {
 					return true;
 				}
 			});
 		} catch (err) {
-			console.log(err);
 			throw new Error(err);
 		}
 	}

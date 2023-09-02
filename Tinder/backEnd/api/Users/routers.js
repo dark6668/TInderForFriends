@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post(
 	"/getUsers",
-	usersCrudControler.getAllData.bind(usersCrudControler),
+	usersCrudControler.getAllUsers.bind(usersCrudControler),
 );
 
 module.exports = router;
