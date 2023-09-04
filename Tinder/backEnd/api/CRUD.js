@@ -9,10 +9,10 @@ class CRUD {
 			const db = await createDatabaseConnection();
 
 			const SELECT_QUERY = `SELECT * FROM ${this.collectionName}`;
-			const result = await new Promise((resolve, reject) => {
+			const result = await new Promise((resolve) => {
 				db.query(SELECT_QUERY, (err, result) => {
 					if (err) {
-						reject(err);
+						throw new Error(err);
 					} else {
 						resolve(result);
 					}
@@ -24,24 +24,59 @@ class CRUD {
 		}
 	}
 
-	async addToTables(column, VALUES) {
-		try {
-			const db = await createDatabaseConnection();
+	async addToTables(column, VALUES, errHandler) {
+		const db = await createDatabaseConnection();
 
-			const INSERT_QUERY = `INSERT INTO ${this.collectionName} (${column.join(
-				", ",
-			)}) VALUES (${VALUES.join(", ")})`;
-
-			db.query(INSERT_QUERY, (err) => {
+		const INSERT_QUERY = `INSERT INTO ${this.collectionName} (${column.join(
+			", ",
+		)}) VALUES (${VALUES.join(", ")})`;
+		return new Promise((resolve, reject) => {
+			db.query(INSERT_QUERY, (err, result) => {
 				if (err) {
-					throw new Error(err);
+					reject(err);
 				} else {
-					return true;
+					resolve(true);
 				}
 			});
-		} catch (err) {
-			throw new Error(err);
-		}
+		}).then((result) => {
+			return true;
+		});
+	}
+
+	async getItemByID(collectionName, column, id, condition) {
+		const db = await createDatabaseConnection();
+
+		const SELECT_QUERY = `SELECT ${column}
+	FROM ${collectionName}
+	${condition};`;
+
+		return new Promise((resolve, reject) => {
+			db.query(SELECT_QUERY, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		}).then((result) => {
+			return result;
+		});
+	}
+	async usingJOIN(id, table1Name, bothColumn, ON) {
+		const SELECT_QUERY = `SELECT ${bothColumn} FROM ${table1Name} INNER JOIN ${ON} `;
+		const db = await createDatabaseConnection();
+
+		return new Promise((resolve, reject) => {
+			db.query(SELECT_QUERY, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		}).then((result) => {
+			return result;
+		});
 	}
 }
 

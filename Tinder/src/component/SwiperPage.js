@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import SwiperBody from "./SwiperBody";
 

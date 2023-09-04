@@ -1,8 +1,8 @@
 CREATE TABLE users (
     "id" INT IDENTITY(1,1) PRIMARY KEY,
     "full_name" VARCHAR(20),
-    "password" INT,
-    "age" INT,
+    "password" char(60)  NOT NULL,
+    "birthYear" year ,
     "profile_image" TEXT,
     "instagram" TEXT
 );
@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE activities (
     "id" INT IDENTITY(1,1) PRIMARY KEY,
     "activity" VARCHAR(100),
-    "date" DATE,
+     "date" DATETIME,
     "location" VARCHAR(20),
     "event_organizer" INT,
     PRIMARY KEY (id),
@@ -22,7 +22,7 @@ CREATE TABLE activities (
     "id" INT IDENTITY(1,1) PRIMARY KEY,
     "user_id" INT,
     "active_id" INT,
-    "event_organizer_id" INT,
+     "event_organizer_Id" INT NOT NULL,
     status TINYINT(1),
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id),

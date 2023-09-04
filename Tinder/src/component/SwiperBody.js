@@ -1,4 +1,4 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
@@ -6,28 +6,28 @@ import Swiper from "react-native-deck-swiper";
 export default function SwiperBody(props) {
 	const swiperRef = React.useRef(currentIndex);
 	const [currentIndex, setCurrentIndex] = React.useState(0);
-	const [liked, setLiked] = React.useState([]);
-	const [disLike, setdisLike] = React.useState([]);
+
+	const [data, setData] = React.useState(props.cards);
 
 	const renderCard = (user) => (
 		<View style={styles.container}>
-			<Image source={{ uri: user.ProfileImage }} style={styles.cardImge} />
+			<Image
+				source={{ uri: `data:image/jpeg;base64,${user.ProfileImage}` }}
+				style={styles.cardImge}
+			/>
 			<View style={styles.containerInfo}>
 				<View style={styles.containerInfoFlex}>
-					<Text style={styles.text}>{user.fullName}</Text>
+					{/* <Text style={styles.text}>Event Organizer: {user.fullName}</Text> */}
+				</View>
+				<Text style={styles.text}>Date: {user.date.split("T")[0]}</Text>
+				<Text style={styles.text}>
+					Time: {user.date.split("T")[1].slice(0, 5)}
+				</Text>
 
-					<Text style={styles.text}>{user.age}</Text>
-				</View>
-				<View style={styles.containerInstagram}>
-					<Text style={styles.text}>{user.instagram}</Text>
-					<AntDesign
-						name="infocirlceo"
-						size={24}
-						color="white"
-						onPress={() => {}}
-					/>
-				</View>
-				<Text style={styles.text}>{user.activity}</Text>
+				<Text style={styles.text}>Instagram: {user.instagram}</Text>
+
+				<Text style={styles.text}>Event: {user.activity}</Text>
+				<Text style={styles.text}>Location: {user.location}</Text>
 			</View>
 			<View style={styles.IconsButton}>
 				<MaterialCommunityIcons.Button
@@ -60,26 +60,7 @@ export default function SwiperBody(props) {
 		setCurrentIndex(currentIndex + 1);
 	};
 
-	const dislike = (index) => {
-		setdisLike((prev) => [...prev, props.cards[index].fullName]);
-		console.log(props.cards[index].fullName);
-		if (currentIndex + 1 === props.cards.length) {
-			end();
-		}
-	};
-
-	const like = (index) => {
-		setLiked((prev) => [...prev, props.cards[index].fullName]);
-
-		if (currentIndex + 1 === props.cards.length) {
-			end();
-		}
-	};
-
 	const end = () => {
-		console.log(`You disLike: ${disLike}`);
-
-		console.log(`You Liked: ${liked}`);
 		props.closeSwiper();
 	};
 
@@ -88,13 +69,11 @@ export default function SwiperBody(props) {
 			<Swiper
 				style={styles.body}
 				ref={swiperRef}
-				cards={props.cards}
+				cards={data}
 				cardIndex={currentIndex}
 				renderCard={renderCard}
 				onSwiped={handleSwiped}
 				infinite={false}
-				onSwipedLeft={dislike}
-				onSwipedRight={like}
 				onSwipedAll={end}
 				disableBottomSwipe={true}
 				disableTopSwipe={true}
@@ -161,9 +140,9 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		textAlign: "center",
 
-		width: 250,
-		top: "70%",
-		left: 80,
+		width: 290,
+		top: "60%",
+		left: 30,
 		gap: 10,
 	},
 	containerInfoFlex: {
@@ -173,7 +152,8 @@ const styles = StyleSheet.create({
 		gap: 20,
 	},
 	text: {
-		color: "#4FD0E9",
+		color: "white",
+		fontWeight: "bold",
 		fontSize: 20,
 	},
 	containerInstagram: {

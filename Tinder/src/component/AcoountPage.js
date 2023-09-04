@@ -28,7 +28,9 @@ export default function AccountPage(props) {
 						<Text style={styles.text}>{props.userInfo.instagram}</Text>
 					</View>
 					<Image
-						source={{ uri: props.userInfo.profile_image }}
+						source={{
+							uri: `data:image/jpeg;base64,${props.userInfo.profile_image}`,
+						}}
 						style={styles.Image}
 					/>
 				</View>
@@ -40,7 +42,7 @@ export default function AccountPage(props) {
 						return (
 							<TouchableOpacity
 								onPress={
-									item.name === "logout" ? () => props.LogIn([]) : undefined
+									item.name === "logout" ? () => props.logOut([]) : undefined
 								}
 								style={styles.containerSettingsItems}
 								key={item.name}

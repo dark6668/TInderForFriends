@@ -5,9 +5,9 @@ import React from "react";
 import { Text, View } from "react-native";
 import AccountPage from "./AcoountPage";
 import CalendarPage from "./CalendarPage";
-import Login from "./LoginPage";
 import MainSwiper from "./SwiperPage";
-
+import ActivitiesPage from "./ActivitiesPage";
+import HomePage from "./HomePage";
 const Tab = createBottomTabNavigator();
 
 export default function Navigation(props) {
@@ -15,6 +15,7 @@ export default function Navigation(props) {
 		MainSwiper,
 		AccountPage,
 		CalendarPage,
+		ActivitiesPage,
 	};
 
 	const tabNavigator = [
@@ -34,16 +35,24 @@ export default function Navigation(props) {
 			nameLabel: "Your Events",
 			props: { undefined: undefined },
 		},
+
+		{
+			componentName: "ActivitiesPage",
+			nameMaterial: "walk",
+			nameLabel: "Activities",
+			props: { userInfo: props.user },
+		},
 		{
 			componentName: "AccountPage",
 			nameMaterial: "account",
 			nameLabel: "Account",
-			props: { userInfo: props.user, LogIn: props.LogIn },
+			props: { userInfo: props.user, logOut: props.logOut },
 		},
 	];
 
 	function TabScreen(tab) {
 		const Component = componentList[tab.route.name];
+
 		const Componentprops = tabNavigator.find((item) => {
 			return item.componentName === tab.route.name;
 		});
@@ -59,7 +68,7 @@ export default function Navigation(props) {
 						height: "100%",
 					}}
 				>
-					<Text>Component not found for name</Text>
+					<Text>Component not found for component name</Text>
 				</View>
 			);
 		}
@@ -68,7 +77,7 @@ export default function Navigation(props) {
 	return (
 		<NavigationContainer>
 			{props.user.length === 0 ? (
-				<Login LogIn={props.LogIn} />
+				<HomePage logIn={props.logIn} />
 			) : (
 				<Tab.Navigator>
 					{tabNavigator.map((item) => (

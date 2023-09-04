@@ -1,6 +1,6 @@
 import { API_URL } from "@env";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import Navigation from "./src/component/Navigation";
 
@@ -9,11 +9,11 @@ export default function App() {
 	const [showSwiper, setShowSwiper] = React.useState(true);
 	const [user, setUser] = React.useState([]);
 
-	const getUsersData = async () => {
+	const getAllActivity = async (id) => {
 		try {
-			await fetch(`${API_URL}/users/getUsers`, {
+			await fetch(`${API_URL}/activity/getAllActivity`, {
 				method: "POST",
-				body: JSON.stringify({ id: "id" }),
+				body: JSON.stringify({ id: id }),
 				headers: {
 					"Content-Type": "application/json; charset=UTF-8",
 				},
@@ -27,12 +27,13 @@ export default function App() {
 				response.json().then((result) => {
 					data = result.map((item) => {
 						return {
-							PersonID: item.id,
+							id: item.id,
+							activity: item.activity,
 							fullName: item.full_name,
-							age: item.age,
+							date: item.date,
 							ProfileImage: item.profile_image,
 							instagram: item.instagram,
-							activity: "play basketball",
+							location: item.location,
 						};
 					});
 
@@ -48,17 +49,24 @@ export default function App() {
 		setShowSwiper(false);
 	};
 
-	const LogIn = (userInfo) => {
-		setUser(userInfo);
-		if (userInfo.length !== 0) {
-			getUsersData();
-		}
+	const logIn = (user) => {
+		setUser(user);
+
+		setShowSwiper(true);
+		getAllActivity(user.id);
+	};
+
+	const logOut = () => {
+		setUser([]);
+		setUsersData([]);
+		setShowSwiper(false);
 	};
 
 	return (
 		<Navigation
 			user={user}
-			LogIn={LogIn}
+			logIn={logIn}
+			logOut={logOut}
 			usersData={usersData}
 			closeSwiper={closeSwiper}
 			showSwiper={showSwiper}
