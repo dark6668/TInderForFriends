@@ -7,10 +7,11 @@ export default function MainSwiper(props) {
 		<SafeAreaView>
 			<View>
 				{props.showSwiper && props.usersData.length > 0 ? (
-					<View>
+					<View style={{ backgroundColor: "#a2e2e2", height: "100%" }}>
 						<SwiperBody
 							cards={props.usersData}
 							closeSwiper={props.closeSwiper}
+							userId={props.userId}
 						/>
 					</View>
 				) : (
@@ -20,6 +21,7 @@ export default function MainSwiper(props) {
 							justifyContent: "center",
 							alignItems: "center",
 							height: "100%",
+							backgroundColor: "#a2e2e2",
 						}}
 					>
 						<Text style={{ fontSize: 24 }}>Nothing To See</Text>

@@ -3,6 +3,7 @@ import { API_URL } from "@env";
 import React, { useEffect } from "react";
 
 import Navigation from "./src/component/Navigation";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function App() {
 	const [usersData, setUsersData] = React.useState([]);
@@ -27,7 +28,8 @@ export default function App() {
 				response.json().then((result) => {
 					data = result.map((item) => {
 						return {
-							id: item.id,
+							organizerId: item.userId,
+							activityId: item.activityId,
 							activity: item.activity,
 							fullName: item.full_name,
 							date: item.date,
@@ -36,13 +38,31 @@ export default function App() {
 							location: item.location,
 						};
 					});
-
 					setUsersData(data);
 				});
 			});
 		} catch (Err) {
 			console.log(Err);
 		}
+	};
+	const getUser = async (id) => {
+		await fetch(`${API_URL}/users/getUser`, {
+			method: "POST",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+			},
+		}).then((response) => {
+			if (response.status !== 200) {
+				throw new Error(
+					`Network request failed or received 
+				an unexpected response`,
+				);
+			}
+			response.json().then((result) => {
+				setUser(result);
+			});
+		});
 	};
 
 	const closeSwiper = () => {
@@ -65,10 +85,12 @@ export default function App() {
 	return (
 		<Navigation
 			user={user}
+			getUser={getUser}
 			logIn={logIn}
 			logOut={logOut}
 			usersData={usersData}
 			closeSwiper={closeSwiper}
+			getAllActivity={getAllActivity}
 			showSwiper={showSwiper}
 		/>
 	);

@@ -12,4 +12,5 @@ router.post(
 	"/getAllActivity",
 	activitiesCrudControler.getAllActivity.bind(activitiesCrudControler),
 );
+
 module.exports = router;

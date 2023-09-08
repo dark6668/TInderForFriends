@@ -13,21 +13,23 @@ class Activities extends CRUD {
 			// TODO: extract from DB
 			const table1Name = "users";
 			const column1 = [
-				"users.id",
+				"users.id  AS userId",
 				"users.full_name",
 				"users.profile_image",
 				"users.instagram",
 			];
 
 			const column2 = [
+				"activities.id  AS activityId",
 				"activities.activity",
 				"activities.date",
 				"activities.location",
 			];
+
 			const bothColumn = [column1, column2];
 			const ON = "activities ON activities.event_organizer =users.id";
-			super.usingJOIN(id, table1Name, bothColumn, ON).then(async (result) => {
-				const filteredResult = result.filter((item) => item.id !== id);
+			super.usingJOIN(table1Name, bothColumn, ON).then(async (result) => {
+				const filteredResult = result.filter((item) => item.userId !== id);
 
 				const newResult = await Promise.all(
 					filteredResult.map(async (item) => {
@@ -38,7 +40,7 @@ class Activities extends CRUD {
 							return item;
 						} catch (err) {
 							console.error(`Error reading file: ${err}`);
-							return item; // You can decide how to handle errors here
+							return item;
 						}
 					}),
 				);
@@ -52,19 +54,15 @@ class Activities extends CRUD {
 
 	async addActivity(req, res, errHandler) {
 		try {
-			const { activity, date, location, id } = req.body.activityInfo;
+			const { activity, date, location, id, time } = req.body.activityInfo;
 
-			const dateTime = new Date(date);
-			const formattedDateTime = dateTime
-				.toISOString()
-				.slice(0, 19)
-				.replace("T", " ");
+			const combinedDateTime = `${date} ${time}`;
 
 			const column = ["activity", "date", "location", "event_organizer"];
 			// TODO: extract from DB
 
 			const VALUES = [
-				`'${activity}','${formattedDateTime}',"${location}",${id} `,
+				`'${activity}','${combinedDateTime}',"${location}",${id} `,
 			];
 			super.addToTables(column, VALUES).then((result) => {
 				res.status(200).send(result);

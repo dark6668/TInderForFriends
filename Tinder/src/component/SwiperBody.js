@@ -2,13 +2,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
+import { API_URL } from "@env";
 
 export default function SwiperBody(props) {
 	const swiperRef = React.useRef(currentIndex);
+	const userId = props.userId;
 	const [currentIndex, setCurrentIndex] = React.useState(0);
 
 	const [data, setData] = React.useState(props.cards);
-
 	const renderCard = (user) => (
 		<View style={styles.container}>
 			<Image
@@ -19,9 +20,9 @@ export default function SwiperBody(props) {
 				<View style={styles.containerInfoFlex}>
 					{/* <Text style={styles.text}>Event Organizer: {user.fullName}</Text> */}
 				</View>
-				<Text style={styles.text}>Date: {user.date.split("T")[0]}</Text>
+				<Text style={styles.text}>Date: {user.date.split(" ")[0]}</Text>
 				<Text style={styles.text}>
-					Time: {user.date.split("T")[1].slice(0, 5)}
+					Time: {user.date.split(" ")[1].slice(0, 5)}
 				</Text>
 
 				<Text style={styles.text}>Instagram: {user.instagram}</Text>
@@ -50,6 +51,8 @@ export default function SwiperBody(props) {
 					color={"red"}
 					onPress={() => {
 						swiperRef.current.swipeLeft();
+
+						liked(currentIndex);
 					}}
 				/>
 			</View>
@@ -64,6 +67,34 @@ export default function SwiperBody(props) {
 		props.closeSwiper();
 	};
 
+	const liked = async (index) => {
+		try {
+			const register = {
+				userId,
+				organizerId: data[index].organizerId,
+				activityId: data[index].activityId,
+			};
+			await fetch(`${API_URL}/registration/registration`, {
+				method: "POST",
+				body: JSON.stringify({ register }),
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8",
+				},
+			}).then((response) => {
+				if (response.status !== 200) {
+					throw new Error(
+						`Network request failed or received 
+					an unexpected response`,
+					);
+				}
+				response.json().then((result) => {
+					console.log(result);
+				});
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
 	return (
 		<View>
 			<Swiper
@@ -73,6 +104,7 @@ export default function SwiperBody(props) {
 				cardIndex={currentIndex}
 				renderCard={renderCard}
 				onSwiped={handleSwiped}
+				onSwipedRight={liked}
 				infinite={false}
 				onSwipedAll={end}
 				disableBottomSwipe={true}

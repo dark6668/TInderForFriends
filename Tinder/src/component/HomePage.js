@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
-import Login from "./LoginPage";
+import Form from "./Form";
 import SignUp from "./SignUp";
+import Login from "./LoginPage";
 export default function HomePage(props) {
 	const [signUpPage, setSignUpPage] = React.useState(false);
 

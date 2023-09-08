@@ -27,6 +27,7 @@ export default function Navigation(props) {
 				usersData: props.usersData,
 				closeSwiper: props.closeSwiper,
 				showSwiper: props.showSwiper,
+				userId: props.user.id,
 			},
 		},
 		{
@@ -46,7 +47,12 @@ export default function Navigation(props) {
 			componentName: "AccountPage",
 			nameMaterial: "account",
 			nameLabel: "Account",
-			props: { userInfo: props.user, logOut: props.logOut },
+			props: {
+				userInfo: props.user,
+				logOut: props.logOut,
+				getAllActivity: props.getAllActivity,
+				getUser: props.getUser,
+			},
 		},
 	];
 
@@ -79,7 +85,16 @@ export default function Navigation(props) {
 			{props.user.length === 0 ? (
 				<HomePage logIn={props.logIn} />
 			) : (
-				<Tab.Navigator>
+				<Tab.Navigator
+					screenOptions={{
+						tabBarStyle: { backgroundColor: "#fe3c72" },
+						tabBarInactiveTintColor: "black",
+						tabBarLabelStyle: {
+							color: "white",
+							fontWeight: "bold",
+						},
+					}}
+				>
 					{tabNavigator.map((item) => (
 						<Tab.Screen
 							key={item.componentName}

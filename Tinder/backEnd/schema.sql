@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE activities (
     "id" INT IDENTITY(1,1) PRIMARY KEY,
     "activity" VARCHAR(100),
-     "date" DATETIME,
+     "date" VARCHAR(19),
     "location" VARCHAR(20),
     "event_organizer" INT,
     PRIMARY KEY (id),

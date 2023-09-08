@@ -10,16 +10,14 @@ app.use(cors());
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const loginRoutes = require("./api/Login/routers");
 const usersRouters = require("./api/Users/routers");
 const activityRouters = require("./api/Activity/routers");
-const signUpRouters = require("./api/SignUP/routers");
-const errHandler = require("./middleware/errorHandler");
 
-app.use("/api/login", loginRoutes, errHandler);
-app.use("/api/users", usersRouters, errHandler);
+const errHandler = require("./middleware/errorHandler");
+const activitiesRegistrationRouters = require("./api/Activity-Registration/routers");
+app.use("/api/registration", activitiesRegistrationRouters, errHandler);
+app.use("/api/users", upload.single("my_photo"), usersRouters, errHandler);
 app.use("/api/activity", activityRouters, errHandler);
-app.use("/api/signUp", upload.single("my_photo"), signUpRouters, errHandler);
 
 app.listen(3000, async () => {
 	try {

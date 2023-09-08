@@ -1,30 +1,16 @@
 import React from "react";
-import {
-	View,
-	TextInput,
-	Alert,
-	Text,
-	TouchableOpacity,
-	StyleSheet,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Alert, Text, TouchableOpacity, StyleSheet } from "react-native";
+import Form from "./Form";
 
 import { API_URL } from "@env";
+import FetchRequest from "./FetchRequest";
 
 export default function Login(props) {
-	const [user, setUser] = React.useState({ name: "", password: "" });
-	const [showPassword, setShowPassword] = React.useState(false);
-
-	const inputValue = (fieldName, text) => {
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				[fieldName]: text,
-			};
-		});
-	};
-
-	const signIn = async () => {
+	const input = [
+		{ key: "Login", name: "name", placeholder: "Full Name" },
+		{ key: "Login", name: "password", placeholder: "Password" },
+	];
+	const signIn = async (user) => {
 		if (user.name.length === 0 && user.password.length === 0) {
 			Alert.alert("Name And Password are empty");
 		} else if (user.name.length === 0) {
@@ -44,36 +30,20 @@ export default function Login(props) {
 				}
 				user.name = sentences.join(" ").trim();
 				user.password = user.password.trim();
-				await fetch(`${API_URL}/login/login`, {
-					method: "POST",
-					body: JSON.stringify({ user }),
-					headers: {
-						"Content-Type": "application/json; charset=UTF-8",
-						// 'Authorization': `Bearer ${ await AsyncStorage.getItem()} `
-					},
-				})
-
-				.then((result) => {
-					if (result.status !== 200) {
-						Alert.alert("unauthorized");
-					} else {
-						result.json().then(async (user) => {
-							props.logIn(user);
-						});
-					}
+				const requst = {
+					url: `${API_URL}/users/login`,
+					body: JSON.stringify(user),
+					ContentType: "application/json; charset=UTF-8",
+				};
+				await FetchRequest(requst).then((data) => {
+					props.logIn(data);
 				});
 			} catch (err) {
-				console.log(err);
+				Alert.alert(err);
 			}
 		}
 	};
-	const toggleShowPassword = () => {
-		setShowPassword((prev) => !prev);
-	};
-	const textFilde = [
-		{ name: "name", placeholder: "Full Name" },
-		{ name: "password", placeholder: "Password" },
-	];
+
 	return (
 		<View
 			style={{
@@ -81,40 +51,22 @@ export default function Login(props) {
 				alignItems: "center",
 				justifyContent: "center",
 				height: "100%",
-				backgroundColor: "#33FFA4",
+				backgroundColor: "#a2e2e2",
 			}}
 		>
 			<View style={styles.container}>
 				<Text style={styles.titleText}>Tinder For Friends</Text>
 				<Text>(If you have a friend on Tinder it's weird )</Text>
 			</View>
-			{textFilde.map((item) => (
-				<View key={item.name}>
-					<TextInput
-						onChangeText={(text) => inputValue(item.name, text)}
-						secureTextEntry={item.name === "password" && !showPassword}
-						name={item.name}
-						style={{ height: 40, borderWidth: 1, width: 200 }}
-						placeholder={item.placeholder}
-					/>
-					{item.name === "password" && (
-						<MaterialCommunityIcons
-							name={showPassword ? "eye-off" : "eye"}
-							size={26}
-							color="#000"
-							onPress={toggleShowPassword}
-							style={{ position: "absolute", right: 170, top: 5 }}
-						/>
-					)}
-				</View>
-			))}
-
-			<TouchableOpacity onPress={signIn} style={styles.button}>
-				<Text style={{ color: "white" }}>Sign In</Text>
-			</TouchableOpacity>
-
+			<Form input={input} submit={signIn} valueSignUp={props.valueSignUp} />
 			<TouchableOpacity onPress={props.valueSignUp}>
-				<Text style={{ marginTop: 21, borderBottomWidth: 1 }}>
+				<Text
+					style={{
+						textAlign: "center",
+						marginTop: 21,
+						borderBottomWidth: 1,
+					}}
+				>
 					Don't Have an account?
 				</Text>
 			</TouchableOpacity>
@@ -122,11 +74,6 @@ export default function Login(props) {
 	);
 }
 const styles = StyleSheet.create({
-	button: {
-		marginTop: 10,
-		backgroundColor: "#32a897",
-		padding: 10,
-	},
 	container: {
 		alignItems: "center",
 		justifyContent: "center",
@@ -135,7 +82,7 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 28,
 		fontWeight: "bold",
-		color: "pink",
+		color: "#fe3c72",
 		textTransform: "uppercase",
 		letterSpacing: 1,
 	},
