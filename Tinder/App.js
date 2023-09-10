@@ -3,7 +3,6 @@ import { API_URL } from "@env";
 import React, { useEffect } from "react";
 
 import Navigation from "./src/component/Navigation";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function App() {
 	const [usersData, setUsersData] = React.useState([]);
@@ -45,6 +44,7 @@ export default function App() {
 			console.log(Err);
 		}
 	};
+
 	const getUser = async (id) => {
 		await fetch(`${API_URL}/users/getUser`, {
 			method: "POST",
@@ -71,7 +71,6 @@ export default function App() {
 
 	const logIn = (user) => {
 		setUser(user);
-
 		setShowSwiper(true);
 		getAllActivity(user.id);
 	};

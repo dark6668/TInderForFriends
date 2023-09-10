@@ -13,4 +13,10 @@ router.post(
 	),
 );
 
+router.post(
+	"/yourActivity",
+	activitiesRegistrationCrudControler.getYourActivity.bind(
+		activitiesRegistrationCrudControler,
+	),
+);
 module.exports = router;

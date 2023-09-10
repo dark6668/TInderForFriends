@@ -34,7 +34,7 @@ export default function Navigation(props) {
 			componentName: "CalendarPage",
 			nameMaterial: "calendar-search",
 			nameLabel: "Your Events",
-			props: { undefined: undefined },
+			props: { userInfo: props.user },
 		},
 
 		{

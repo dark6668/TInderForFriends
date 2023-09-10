@@ -10,9 +10,14 @@ export default function FetchRequest(requst) {
 			if (response.status !== 200) {
 				reject("Unauthorized");
 			} else {
-				response.json().then((responseData) => {
-					resolve(responseData);
-				});
+				response
+					.json()
+					.then((responseData) => {
+						resolve(responseData);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
 			}
 		});
 	});

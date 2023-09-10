@@ -33,7 +33,6 @@ class CRUD {
 			const INSERT_QUERY = `INSERT INTO ${this.collectionName} (${column.join(
 				", ",
 			)}) VALUES (${VALUES.join(", ")})`;
-
 			return new Promise((resolve, reject) => {
 				db.query(INSERT_QUERY, (err, result) => {
 					if (err) {
@@ -72,10 +71,10 @@ class CRUD {
 			throw new Error(err);
 		}
 	}
-	async usingJOIN(table1Name, bothColumn, ON) {
+	async usingJOIN(column, ON) {
 		try {
-			const SELECT_QUERY = `SELECT ${bothColumn} FROM ${table1Name} INNER JOIN ${ON} `;
-
+			const SELECT_QUERY = `SELECT ${column} FROM ${this.collectionName} INNER JOIN ${ON} `;
+			console.log(SELECT_QUERY);
 			const db = await createDatabaseConnection();
 
 			return new Promise((resolve, reject) => {
@@ -102,8 +101,6 @@ class CRUD {
 					const base64Image = data.toString("base64");
 					resolve(base64Image);
 				});
-			}).then((result) => {
-				return result;
 			});
 		} catch (err) {
 			throw new Error(err);

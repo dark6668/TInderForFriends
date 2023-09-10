@@ -134,7 +134,7 @@ export default function AccountPage(props) {
 
 				await FetchRequest(requst).then(() => {
 					changeItem();
-					props.getAllActivity();
+
 					props.getUser(props.userInfo.id);
 					Alert.alert("The update was successful");
 				});

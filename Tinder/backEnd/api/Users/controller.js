@@ -9,9 +9,14 @@ class Users extends CRUD {
 	}
 	async getAllUsers(req, res, errHandler) {
 		try {
-			super.getAllData().then((result) => {
-				res.status(200).send(result);
-			});
+			super
+				.getAllData()
+				.then((result) => {
+					res.status(200).send(result);
+				})
+				.catch((err) => {
+					errHandler(err);
+				});
 		} catch (err) {
 			errHandler(err);
 		}
@@ -23,7 +28,6 @@ class Users extends CRUD {
 				const { originalname, buffer } = req.file;
 				const { id } = req.body;
 				super.getItemByID("profile_image ", id).then((result) => {
-					console.log(result[0].profile_image);
 					fs.writeFileSync(result[0].profile_image, buffer);
 
 					res.status(200).send(true);
@@ -34,9 +38,14 @@ class Users extends CRUD {
 				if (key === "password") {
 					value = bcrypt.hashSync(value, 10);
 				}
-				super.updateItem(id, key, value).then((result) => {
-					res.status(200).send(true);
-				});
+				super
+					.updateItem(id, key, value)
+					.then((result) => {
+						res.status(200).send(true);
+					})
+					.catch((err) => {
+						errHandler(err);
+					});
 			}
 		} catch (err) {
 			errHandler(err);
@@ -53,12 +62,17 @@ class Users extends CRUD {
 				"profile_image",
 				"instagram",
 			];
-			super.getItemByID(column, id).then((result) => {
-				super.readFileLocal(result[0].profile_image).then((img) => {
-					result[0].profile_image = img;
-					res.status(200).send(result[0]);
+			super
+				.getItemByID(column, id)
+				.then((result) => {
+					super.readFileLocal(result[0].profile_image).then((img) => {
+						result[0].profile_image = img;
+						res.status(200).send(result[0]);
+					});
+				})
+				.catch((err) => {
+					errHandler(err);
 				});
-			});
 		} catch (err) {
 			errHandler(err);
 		}
@@ -68,22 +82,27 @@ class Users extends CRUD {
 		try {
 			const { name, password } = req.body;
 
-			super.getAllData().then((result) => {
-				const isUserInSystem = result.find((item) => {
-					return (
-						item.full_name === name &&
-						bcrypt.compareSync(password, item.password)
-					);
-				});
-				if (isUserInSystem !== undefined) {
-					super.readFileLocal(isUserInSystem.profile_image).then((result) => {
-						isUserInSystem.profile_image = result;
-						res.status(200).send(isUserInSystem);
+			super
+				.getAllData()
+				.then((result) => {
+					const isUserInSystem = result.find((item) => {
+						return (
+							item.full_name === name &&
+							bcrypt.compareSync(password, item.password)
+						);
 					});
-				} else {
-					res.status(401).send("unauthorized");
-				}
-			});
+					if (isUserInSystem !== undefined) {
+						super.readFileLocal(isUserInSystem.profile_image).then((result) => {
+							isUserInSystem.profile_image = result;
+							res.status(200).send(isUserInSystem);
+						});
+					} else {
+						res.status(401).send("unauthorized");
+					}
+				})
+				.catch((err) => {
+					errHandler(err);
+				});
 		} catch (err) {
 			errHandler(err);
 		}
@@ -108,13 +127,17 @@ class Users extends CRUD {
 				"profile_image",
 				"instagram",
 			];
-			super.addToTables(column, value).then(() => {
-				fs.writeFileSync(filePath, buffer);
+			super
+				.addToTables(column, value)
+				.then(() => {
+					fs.writeFileSync(filePath, buffer);
 
-				res.status(200).send({ goog: "good" });
-			});
+					res.status(200).send({ goog: "good" });
+				})
+				.catch((err) => {
+					errHandler(err);
+				});
 		} catch (err) {
-			console.log(1);
 			errHandler(err);
 		}
 	}
