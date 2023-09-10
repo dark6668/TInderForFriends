@@ -17,7 +17,6 @@ export default function SwiperBody(props) {
 				style={styles.cardImge}
 			/>
 			<View style={styles.containerInfo}>
-				<View style={styles.containerInfoFlex}></View>
 				<Text style={styles.text}>Date: {user.date.split(" ")[0]}</Text>
 				<Text style={styles.text}>
 					Time: {user.date.split(" ")[1].slice(0, 5)}
@@ -63,28 +62,7 @@ export default function SwiperBody(props) {
 		props.closeSwiper();
 	};
 
-	const handlerSwipedRigth = async (index) => {
-		try {
-			const register = {
-				userId,
-				organizerId: data[index].organizerId,
-				activityId: data[index].activityId,
-			};
-			const requst = {
-				url: `${API_URL}/registration/registration`,
-				body: JSON.stringify({ register }),
-				ContentType: "application/json; charset=UTF-8",
-			};
-
-			await FetchRequest(requst).then((data) => {});
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
 	const handlerSwiped = async (swipe, index) => {
-		console.log(index);
-
 		try {
 			const register = {
 				userId,
@@ -92,6 +70,7 @@ export default function SwiperBody(props) {
 				activityId: data[index].activityId,
 				swipe,
 			};
+
 			const requst = {
 				url: `${API_URL}/registration/registration`,
 				body: JSON.stringify({ register }),

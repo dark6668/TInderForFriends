@@ -11,8 +11,7 @@ class Activities extends CRUD {
 		try {
 			const { id } = req.body;
 
-			// TODO: extract from DB
-
+			// TODO: extract from DBSELECT activities.*
 			const column = [
 				"activities.id AS activityId",
 				"activities.activity",
@@ -24,14 +23,16 @@ class Activities extends CRUD {
 				"users.instagram",
 			];
 			const ON = `
-			activity_registration ON users.id = activities.event_organizer
-			LEFT JOIN
-			activity_registration ON activities.id = activity_registration.active_id
-			WHERE
-			(activity_registration.active_id IS NULL
-				OR (activity_registration.active_id IS NOT NULL AND activity_registration.status IS NULL  ))
-				AND users.id != ${id};`;
-
+			users ON users.id = activities.event_organizer
+		
+			WHERE activities.event_organizer != ${id}
+			AND activities.id NOT IN (
+				SELECT active_id
+				FROM activity_registration
+				WHERE activity_registration.user_id = ${id}
+			);
+	
+			`;
 			super
 				.usingJOIN(column, ON)
 				.then(async (result) => {

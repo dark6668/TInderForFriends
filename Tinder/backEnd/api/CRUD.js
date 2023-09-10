@@ -74,7 +74,7 @@ class CRUD {
 	async usingJOIN(column, ON) {
 		try {
 			const SELECT_QUERY = `SELECT ${column} FROM ${this.collectionName} INNER JOIN ${ON} `;
-			console.log(SELECT_QUERY);
+
 			const db = await createDatabaseConnection();
 
 			return new Promise((resolve, reject) => {

@@ -14,6 +14,7 @@ class ActivitiesRegistration extends CRUD {
 			}
 			const column = ["user_id", "active_id", "event_organizer_Id", "status"];
 			const values = [userId, activityId, organizerId, status];
+
 			super.addToTables(column, values).then((result) => {
 				res.status(200).send(result);
 			});
