@@ -24,7 +24,6 @@ export default function CalendarPage(props) {
 		};
 
 		await FetchRequest(requst).then((data) => {
-		
 			setYourEvent(data);
 		});
 	};
@@ -48,10 +47,8 @@ export default function CalendarPage(props) {
 						{yourEvent.map((item) => {
 							return selected === item.ActivityDate.split(" ")[0] ? (
 								<View key={item.ActivityID} style={styles.event}>
-								{console.log(item)}
-									<Text style={styles.text}>
-										Event: {item.ActivitName}
-									</Text>
+									{console.log(item)}
+									<Text style={styles.text}>Event: {item.ActivitName}</Text>
 									<Text style={styles.text}>
 										Location: {item.ActivityLocation}
 									</Text>
@@ -61,9 +58,9 @@ export default function CalendarPage(props) {
 									<Text style={styles.text}>
 										Time: {item.ActivityDate.split(" ")[1].slice(0, 5)}
 									</Text>
-									 <Text style={styles.text}>
+									<Text style={styles.text}>
 										Organizer: {item.EventOrganizer}
-									</Text> 
+									</Text>
 									<TouchableOpacity
 										onPress={() => {
 											notifications(item);
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
 		width: 150,
 	},
 	containerEvent: {
-		marginTop:10,
+		marginTop: 10,
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "space-evenly",

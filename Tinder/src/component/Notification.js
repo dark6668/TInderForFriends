@@ -19,9 +19,12 @@ export default async function NotificationsEvent(item) {
 		await Notifications.scheduleNotificationAsync({
 			content: {
 				title: item.ActivitName,
-				body: `Time: ${item.ActivityDate.split(" ")[1].slice(0, 5)}, Location: ${
-					item.ActivityLocation
-				}, Organizer: ${item.EventOrganizer}`,
+				body: `Time: ${item.ActivityDate.split(" ")[1].slice(
+					0,
+					5,
+				)}, Location: ${item.ActivityLocation}, Organizer: ${
+					item.EventOrganizer
+				}`,
 			},
 			trigger: {
 				seconds: timeDifferenceInSeconds,

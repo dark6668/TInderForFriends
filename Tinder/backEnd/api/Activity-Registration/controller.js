@@ -23,6 +23,5 @@ class ActivitiesRegistration extends CRUD {
 			errHandler(err);
 		}
 	}
-	
 }
 module.exports = { ActivitiesRegistration };

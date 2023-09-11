@@ -12,7 +12,6 @@ export default function Login(props) {
 	];
 
 	const signIn = async (user) => {
-		
 		if (user.name.length === 0 && user.password.length === 0) {
 			Alert.alert("Name And Password are empty");
 		} else if (user.name.length === 0) {
