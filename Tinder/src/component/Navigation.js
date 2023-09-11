@@ -17,7 +17,6 @@ export default function Navigation(props) {
 		CalendarPage,
 		ActivitiesPage,
 	};
-
 	const tabNavigator = [
 		{
 			componentName: "MainSwiper",

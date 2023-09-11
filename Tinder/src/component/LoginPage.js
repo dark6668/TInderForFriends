@@ -19,6 +19,7 @@ export default function Login(props) {
 		} else if (user.password.length === 0) {
 			Alert.alert("Password is empty");
 		} else {
+
 			try {
 				user.name = user.name.toLowerCase();
 				const sentences = user.name.split(" ");

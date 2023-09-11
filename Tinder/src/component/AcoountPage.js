@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		marginLeft: "25%",
 		marginTop: 10,
-		backgroundColor: "#32a897",
+		backgroundColor: "#fe3c72",
 		padding: 10,
 		width: 150,
 	},

@@ -36,10 +36,12 @@ class ActivitiesRegistration extends CRUD {
 				"users.instagram",
 			];
 
+
 			const ON = `activities ON activities.event_organizer = activity_registration.event_organizer_Id INNER JOIN
-		users
-		ON
-		users.id = activity_registration.event_organizer_Id WHERE activity_registration.user_id = ${id};`;
+			users
+			ON
+			users.id = activity_registration.event_organizer_Id WHERE activity_registration.user_id = ${id};`;
+
 			super
 				.usingJOIN(column, ON)
 				.then(async (result) => {

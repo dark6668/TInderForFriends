@@ -77,9 +77,7 @@ export default function SwiperBody(props) {
 				ContentType: "application/json; charset=UTF-8",
 			};
 
-			await FetchRequest(requst).then((data) => {
-				console.log(data);
-			});
+			await FetchRequest(requst);
 		} catch (err) {
 			console.log(err);
 		}

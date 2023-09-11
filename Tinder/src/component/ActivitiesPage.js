@@ -75,11 +75,10 @@ export default function YourActivities(props) {
 					Alert.alert("The activity has been added");
 				});
 			}
-		} catch (Err) {
+		} catch (err) {
 			Alert.alert("Network request failed or received an unexpected response");
 		}
 	};
-
 	return (
 		<View
 			style={{

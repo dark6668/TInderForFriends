@@ -24,6 +24,7 @@ export default function App() {
 						an unexpected response`,
 					);
 				}
+
 				response.json().then((result) => {
 					data = result.map((item) => {
 						return {
