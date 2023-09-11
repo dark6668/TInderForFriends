@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "7.2.0",
+    "@react-native-firebase/app": "^18.4.0",
+    "@react-native-firebase/messaging": "^18.4.0",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
@@ -17,7 +19,9 @@
     "buffer": "^6.0.3",
     "expo": "~49.0.8",
     "expo-cli": "^6.3.10",
+    "expo-device": "~5.4.0",
     "expo-image-picker": "~14.3.2",
+    "expo-notifications": "~0.20.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
