@@ -4,8 +4,8 @@ const usersCrudControler = new Users("users");
 const router = express.Router();
 
 router.post(
-	"/getUsers",
-	usersCrudControler.getAllUsers.bind(usersCrudControler),
+	"/getUserActivity",
+	usersCrudControler.getUserActivity.bind(usersCrudControler),
 );
 router.post(
 	"/updateUser",

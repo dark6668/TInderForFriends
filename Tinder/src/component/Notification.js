@@ -3,7 +3,7 @@ import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
 
 export default async function NotificationsEvent(item) {
-	const time = item.date;
+	const time = item.ActivityDate;
 	const [datePart, timePart] = time.split(" ");
 	const [hours, minutes] = timePart.split(":");
 	const targetDate = new Date(datePart);
@@ -18,10 +18,10 @@ export default async function NotificationsEvent(item) {
 	try {
 		await Notifications.scheduleNotificationAsync({
 			content: {
-				title: item.activity,
-				body: `Time: ${item.date.split(" ")[1].slice(0, 5)}, Location: ${
-					item.location
-				}, Organizer: ${item.event_organizer}`,
+				title: item.ActivitName,
+				body: `Time: ${item.ActivityDate.split(" ")[1].slice(0, 5)}, Location: ${
+					item.ActivityLocation
+				}, Organizer: ${item.EventOrganizer}`,
 			},
 			trigger: {
 				seconds: timeDifferenceInSeconds,

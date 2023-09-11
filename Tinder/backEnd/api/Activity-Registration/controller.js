@@ -1,4 +1,5 @@
 const { CRUD } = require("../CRUD");
+const createDatabaseConnection = require("../../db-connection");
 class ActivitiesRegistration extends CRUD {
 	constructor() {
 		super("activity_registration");
@@ -22,37 +23,6 @@ class ActivitiesRegistration extends CRUD {
 			errHandler(err);
 		}
 	}
-	async getYourActivity(req, res, errHandler) {
-		try {
-			const { id } = req.body;
-			// TODO: extract from DB
-
-			const column = [
-				"activities.activity",
-				"activities.date",
-				"activities.location",
-				"activity_registration.id as registration_id ",
-				"users.full_name as event_organizer",
-				"users.instagram",
-			];
-
-
-			const ON = `activities ON activities.event_organizer = activity_registration.event_organizer_Id INNER JOIN
-			users
-			ON
-			users.id = activity_registration.event_organizer_Id WHERE activity_registration.user_id = ${id};`;
-
-			super
-				.usingJOIN(column, ON)
-				.then(async (result) => {
-					res.status(200).send(result);
-				})
-				.catch((err) => {
-					errHandler(err);
-				});
-		} catch (err) {
-			errHandler(err);
-		}
-	}
+	
 }
 module.exports = { ActivitiesRegistration };

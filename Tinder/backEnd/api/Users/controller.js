@@ -7,11 +7,32 @@ class Users extends CRUD {
 	constructor() {
 		super("users");
 	}
-	async getAllUsers(req, res, errHandler) {
+	async getUserActivity(req, res, errHandler) {
 		try {
-			super
-				.getAllData()
-				.then((result) => {
+			const { id } = req.body;
+		
+			// TODO: extract from DB
+
+			const column = [
+				"users.full_name AS User",
+				"activities.id AS ActivityID",
+				"activities.activity AS ActivitName",
+				    "activities.location AS ActivityLocation",
+				    "activities.date AS ActivityDate",
+				    "users2.full_name AS EventOrganizer"
+			];
+
+			const ON = ` activity_registration ON users.id = activity_registration.user_id INNER JOIN 
+			     activities ON activity_registration.active_id = activities.id
+			 LEFT JOIN 
+			     users AS users2 ON activities.event_organizer = users2.id
+			 WHERE 
+			     users.id = ${id}
+			     AND activity_registration.status = 1;`
+				 super
+				.usingJOIN(column, ON)
+				.then(async (result) => {
+				
 					res.status(200).send(result);
 				})
 				.catch((err) => {
@@ -21,6 +42,7 @@ class Users extends CRUD {
 			errHandler(err);
 		}
 	}
+
 
 	async updateUser(req, res, errHandler) {
 		try {

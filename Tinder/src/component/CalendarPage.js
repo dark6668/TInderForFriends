@@ -12,17 +12,19 @@ export default function CalendarPage(props) {
 	useEffect(() => {
 		getYourActivity();
 	}, []);
+
 	const getYourActivity = async () => {
 		const id = {
 			id: props.userInfo.id,
 		};
 		const requst = {
-			url: `${API_URL}/registration/yourActivity`,
+			url: `${API_URL}/users/getUserActivity`,
 			body: JSON.stringify(id),
 			ContentType: "application/json; charset=UTF-8",
 		};
 
 		await FetchRequest(requst).then((data) => {
+		
 			setYourEvent(data);
 		});
 	};
@@ -44,26 +46,27 @@ export default function CalendarPage(props) {
 				{yourEvent.length > 0 && (
 					<View style={styles.containerEvent}>
 						{yourEvent.map((item) => {
-							return selected === item.date.split(" ")[0] ? (
-								<View key={item.id} style={styles.event}>
+							return selected === item.ActivityDate.split(" ")[0] ? (
+								<View key={item.ActivityID} style={styles.event}>
+								{console.log(item)}
 									<Text style={styles.text}>
-										Event: {yourEvent[0].activity}
+										Event: {item.ActivitName}
 									</Text>
 									<Text style={styles.text}>
-										Location: {yourEvent[0].location}
+										Location: {item.ActivityLocation}
 									</Text>
 									<Text style={styles.text}>
-										Date: {yourEvent[0].date.split(" ")[0]}
+										Date: {item.ActivityDate.split(" ")[0]}
 									</Text>
 									<Text style={styles.text}>
-										Time: {yourEvent[0].date.split(" ")[1].slice(0, 5)}
+										Time: {item.ActivityDate.split(" ")[1].slice(0, 5)}
 									</Text>
-									<Text style={styles.text}>
-										Organizer: {yourEvent[0].event_organizer}
-									</Text>
+									 <Text style={styles.text}>
+										Organizer: {item.EventOrganizer}
+									</Text> 
 									<TouchableOpacity
 										onPress={() => {
-											notifications(yourEvent[0]);
+											notifications(item);
 										}}
 									>
 										<Text style={styles.button}>Notify Me</Text>
@@ -97,8 +100,9 @@ const styles = StyleSheet.create({
 		width: 150,
 	},
 	containerEvent: {
+		marginTop:10,
 		display: "flex",
-		flexDirection: "column",
+		flexDirection: "row",
 		justifyContent: "space-evenly",
 		height: 400,
 	},
