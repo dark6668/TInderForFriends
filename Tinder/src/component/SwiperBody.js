@@ -6,6 +6,7 @@ import { API_URL } from "@env";
 import FetchRequest from "./FetchRequest";
 
 export default function SwiperBody(props) {
+
 	const swiperRef = React.useRef(currentIndex);
 	const userId = props.userId;
 	const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -58,7 +59,7 @@ export default function SwiperBody(props) {
 		setCurrentIndex(currentIndex + 1);
 	};
 
-	const end = () => {
+	const closeSwiper = () => {
 		props.closeSwiper();
 	};
 
@@ -82,7 +83,7 @@ export default function SwiperBody(props) {
 			console.log(err);
 		}
 	};
-
+	
 	return (
 		<View>
 			<Swiper
@@ -95,7 +96,7 @@ export default function SwiperBody(props) {
 				onSwipedRight={() => handlerSwiped("Right", currentIndex)}
 				onSwipedLeft={() => handlerSwiped("Left", currentIndex)}
 				infinite={false}
-				onSwipedAll={end}
+				onSwipedAll={closeSwiper}
 				disableBottomSwipe={true}
 				disableTopSwipe={true}
 				overlayLabels={{

@@ -10,8 +10,10 @@ export default function CalendarPage(props) {
 	const [yourEvent, setYourEvent] = React.useState([]);
 
 	useEffect(() => {
+		
 		getYourActivity();
 	}, []);
+
 
 	const getYourActivity = async () => {
 		const id = {
@@ -47,7 +49,7 @@ export default function CalendarPage(props) {
 						{yourEvent.map((item) => {
 							return selected === item.ActivityDate.split(" ")[0] ? (
 								<View key={item.ActivityID} style={styles.event}>
-									{console.log(item)}
+								
 									<Text style={styles.text}>Event: {item.ActivitName}</Text>
 									<Text style={styles.text}>
 										Location: {item.ActivityLocation}

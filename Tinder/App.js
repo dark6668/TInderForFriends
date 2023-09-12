@@ -10,6 +10,7 @@ export default function App() {
 	const [user, setUser] = React.useState([]);
 
 	const getAllActivity = async (id) => {
+
 		try {
 			await fetch(`${API_URL}/activity/getAllActivity`, {
 				method: "POST",
@@ -26,7 +27,8 @@ export default function App() {
 				}
 
 				response.json().then((result) => {
-					data = result.map((item) => {
+					const data = result.map((item) => {
+						console.log("");
 						return {
 							organizerId: item.userId,
 							activityId: item.activityId,
@@ -71,6 +73,7 @@ export default function App() {
 	};
 
 	const logIn = (user) => {
+	
 		setUser(user);
 		setShowSwiper(true);
 		getAllActivity(user.id);
