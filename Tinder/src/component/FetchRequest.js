@@ -1,3 +1,5 @@
+import { API_URL } from "@env";
+
 export default function FetchRequest(requst) {
 	return new Promise((resolve, reject) => {
 		fetch(requst.url, {

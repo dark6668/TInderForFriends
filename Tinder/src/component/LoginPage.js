@@ -4,6 +4,7 @@ import Form from "./Form";
 
 import { API_URL } from "@env";
 import FetchRequest from "./FetchRequest";
+import err from "../../backEnd/middleware/errorHandler";
 
 export default function Login(props) {
 	const input = [
@@ -29,6 +30,7 @@ export default function Login(props) {
 							sentences[i][0].toUpperCase() + sentences[i].substring(1);
 					}
 				}
+
 				user.name = sentences.join(" ").trim();
 				user.password = user.password.trim();
 				const requst = {
@@ -36,6 +38,7 @@ export default function Login(props) {
 					body: JSON.stringify(user),
 					ContentType: "application/json; charset=UTF-8",
 				};
+
 				await FetchRequest(requst).then((data) => {
 					props.logIn(data);
 				});

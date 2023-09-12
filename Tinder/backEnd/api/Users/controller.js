@@ -114,6 +114,7 @@ class Users extends CRUD {
 					if (isUserInSystem !== undefined) {
 						super.readFileLocal(isUserInSystem.profile_image).then((result) => {
 							isUserInSystem.profile_image = result;
+
 							res.status(200).send(isUserInSystem);
 						});
 					} else {
