@@ -1,71 +1,97 @@
-import React from "react";
-import { View } from "react-native";
+import { API_URL } from "@env";
 
-import DeckSwiper from "./src/component/Swiper";
-const users = [
-	{
-		name: "Eleanor Mitchell",
-		age: 35,
-		img: "https://shorturl.at/abvT1",
-		instagram: "@EleanorTheDude",
-		activity: "dance",
-	},
-	{
-		name: "Sophia Johnson",
-		age: 28,
-		img: "https://shorturl.at/emQ46",
-		instagram: "@SophiaJourney",
-		activity: "play basketball",
-	},
-	{
-		name: "Daniel Parker",
-		age: 30,
-		img: "https://shorturl.at/AKPWY",
-		instagram: "@DanielP_Fiction",
-		activity: "gossip about the neighbors",
-	},
-	{
-		name: "Olivia Anderson",
-		age: 25,
-		img: "https://shorturl.at/uCVY3",
-		instagram: "@OliviaCreates",
-		activity: "jump on one leg",
-	},
-	{
-		name: "Sophia Ramirez",
-		age: 28,
-		img: "https://shorturl.at/wLR57",
-		instagram: "@SophiaRamirezArt",
-		activity: "Painting vibrant landscapes",
-	},
-	{
-		name: "Liam Miller",
-		age: 25,
-		img: "https://shorturl.at/lmzE7",
-		instagram: "@LiamTheDude",
-		activity: "write code",
-	},
-	{
-		name: "Mary Mouser",
-		age: 27,
-		img: "https://rb.gy/uhq2j",
-		instagram: "@missmarymmouser",
-		activity: "live in a haunted house ",
-	},
-	{
-		name: "Peyton List",
-		age: 25,
-		img: "https://www.themoviedb.org/t/p/w500/5p8KwRgBUYVcKBKTYFdD30o6dAc.jpg",
-		instagram: "@peytonlist",
-		activity: "modeling",
-	},
-];
+import React, { useEffect } from "react";
+
+import Navigation from "./src/component/Navigation";
+
 export default function App() {
-	const [listOfUser, setListOfuser] = React.useState(users);
+	const [usersData, setUsersData] = React.useState([]);
+	const [showSwiper, setShowSwiper] = React.useState(true);
+	const [user, setUser] = React.useState([]);
+
+	const getAllActivity = async (id) => {
+		try {
+			await fetch(`${API_URL}/activity/getAllActivity`, {
+				method: "POST",
+				body: JSON.stringify({ id: id }),
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8",
+				},
+			}).then((response) => {
+				if (response.status !== 200) {
+					throw new Error(
+						`Network request failed or received 
+						an unexpected response`,
+					);
+				}
+
+				response.json().then((result) => {
+					data = result.map((item) => {
+						return {
+							organizerId: item.userId,
+							activityId: item.activityId,
+							activity: item.activity,
+							fullName: item.full_name,
+							date: item.date,
+							ProfileImage: item.profile_image,
+							instagram: item.instagram,
+							location: item.location,
+						};
+					});
+					setUsersData(data);
+				});
+			});
+		} catch (Err) {
+			console.log(Err);
+		}
+	};
+
+	const getUser = async (id) => {
+		await fetch(`${API_URL}/users/getUser`, {
+			method: "POST",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json; charset=UTF-8",
+			},
+		}).then((response) => {
+			if (response.status !== 200) {
+				throw new Error(
+					`Network request failed or received 
+				an unexpected response`,
+				);
+			}
+			response.json().then((result) => {
+				setUser(result);
+			});
+		});
+	};
+
+	const closeSwiper = () => {
+		setShowSwiper(false);
+	};
+
+	const logIn = (user) => {
+		setUser(user);
+		setShowSwiper(true);
+		getAllActivity(user.id);
+	};
+
+	const logOut = () => {
+		setUser([]);
+		setUsersData([]);
+		setShowSwiper(false);
+	};
 
 	return (
-		<View>
-			<DeckSwiper users={users} />
-		</View>
+		<Navigation
+			user={user}
+			getUser={getUser}
+			logIn={logIn}
+			logOut={logOut}
+			usersData={usersData}
+			closeSwiper={closeSwiper}
+			getAllActivity={getAllActivity}
+			showSwiper={showSwiper}
+		/>
 	);
 }
