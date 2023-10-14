@@ -4,7 +4,6 @@ import Form from "./Form";
 
 import { API_URL } from "@env";
 import FetchRequest from "./FetchRequest";
-import err from "../../backEnd/middleware/errorHandler";
 
 export default function Login(props) {
 	const input = [
@@ -33,8 +32,9 @@ export default function Login(props) {
 
 				user.name = sentences.join(" ").trim();
 				user.password = user.password.trim();
+
 				const requst = {
-					url: `${API_URL}/users/login`,
+					url: "/users/login",
 					body: JSON.stringify(user),
 					ContentType: "application/json; charset=UTF-8",
 				};

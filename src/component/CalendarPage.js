@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Calendar } from "react-native-calendars";
 import FetchRequest from "./FetchRequest";
-import { API_URL } from "@env";
 import NotificationsEvent from "./Notification";
 
 export default function CalendarPage(props) {
@@ -18,7 +17,7 @@ export default function CalendarPage(props) {
 			id: props.userInfo.id,
 		};
 		const requst = {
-			url: `${API_URL}/users/getUserActivity`,
+			url: "/users/getUserActivity",
 			body: JSON.stringify(id),
 			ContentType: "application/json; charset=UTF-8",
 		};

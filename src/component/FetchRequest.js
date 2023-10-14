@@ -2,7 +2,7 @@ import { API_URL } from "@env";
 
 export default function FetchRequest(requst) {
 	return new Promise((resolve, reject) => {
-		fetch(requst.url, {
+		fetch(`${API_URL}${requst.url}`, {
 			method: "POST",
 			body: requst.body,
 			headers: {

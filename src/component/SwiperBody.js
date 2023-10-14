@@ -2,7 +2,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
-import { API_URL } from "@env";
 import FetchRequest from "./FetchRequest";
 
 export default function SwiperBody(props) {
@@ -68,7 +67,7 @@ export default function SwiperBody(props) {
 			};
 
 			const requst = {
-				url: `${API_URL}/registration/registration`,
+				url: "/registration/registration",
 				body: JSON.stringify({ register }),
 				ContentType: "application/json; charset=UTF-8",
 			};

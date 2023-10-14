@@ -1,5 +1,3 @@
-import { API_URL } from "@env";
-
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -116,7 +114,7 @@ export default function AccountPage(props) {
 			}
 			try {
 				const requst = {
-					url: `${API_URL}/users/updateUser`,
+					url: "/users/updateUser",
 					body: JSON.stringify({ change }),
 					ContentType: "application/json; charset=UTF-8",
 				};

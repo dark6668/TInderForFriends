@@ -1,6 +1,5 @@
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { API_URL } from "@env";
 import FetchRequest from "./FetchRequest";
 
 import {
@@ -58,7 +57,7 @@ export default function YourActivities(props) {
 				Alert.alert("All fields must be filled");
 			} else {
 				const requst = {
-					url: `${API_URL}/activity/addActivity`,
+					url: "/activity/addActivity",
 					body: JSON.stringify({ activityInfo }),
 					ContentType: "application/json; charset=UTF-8",
 				};

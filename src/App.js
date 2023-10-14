@@ -1,6 +1,4 @@
-import { API_URL } from "@env";
-
-import React, { useEffect } from "react";
+import React from "react";
 
 import Navigation from "./component/Navigation";
 
@@ -14,7 +12,7 @@ export default function App() {
 	const getAllActivity = async (id) => {
 		try {
 			const requst = {
-				url: `${API_URL}/activity/getAllActivity`,
+				url: "/activity/getAllActivity",
 				body: JSON.stringify({ id: id }),
 				ContentType: "application/json; charset=UTF-8",
 			};
@@ -41,10 +39,11 @@ export default function App() {
 	const getUser = async (id) => {
 		try {
 			const requst = {
-				url: `${API_URL}/users/getUser`,
+				url: "/users/getUser",
 				body: JSON.stringify({ id: id }),
 				ContentType: "application/json; charset=UTF-8",
 			};
+			
 			await FetchRequest(requst).then((result) => {
 				setUser(result);
 			});

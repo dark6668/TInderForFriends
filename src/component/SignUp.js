@@ -1,6 +1,4 @@
 import React from "react";
-
-import { API_URL } from "@env";
 import { Text, Alert, View, TouchableOpacity } from "react-native";
 import Form from "./Form";
 import ImgPicker from "./ImagePicker";
@@ -56,7 +54,7 @@ export default function SignUp(props) {
 				});
 
 				const requst = {
-					url: `${API_URL}/users/signUp`,
+					url: "/users/signUp",
 					body: data,
 					ContentType: "multipart/form-data",
 				};
