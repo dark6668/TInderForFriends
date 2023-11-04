@@ -8,7 +8,6 @@ export default function App() {
 	const [usersData, setUsersData] = React.useState([]);
 	const [showSwiper, setShowSwiper] = React.useState(true);
 	const [user, setUser] = React.useState([]);
-
 	const getAllActivity = async (id) => {
 		try {
 			const requst = {
@@ -43,7 +42,7 @@ export default function App() {
 				body: JSON.stringify({ id: id }),
 				ContentType: "application/json; charset=UTF-8",
 			};
-			
+
 			await FetchRequest(requst).then((result) => {
 				setUser(result);
 			});

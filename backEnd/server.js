@@ -24,7 +24,11 @@ app.listen(3000, async () => {
 		const db = await createDatabaseConnection();
 		console.log("Server started on port 3000 and Connected to the database ");
 	} catch (err) {
+		console.log(err);
 		console.error("Server cannot start due to database connection failure");
 		process.exit(1);
 	}
 });
+process.on('SIGINT', () => {
+	process.exit(0);
+  });

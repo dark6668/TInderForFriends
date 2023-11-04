@@ -74,3 +74,18 @@ Add the following configuration variables:
     cd ./path/to/your/root/project
 
     npx expo start
+
+**Docker**
+
+run the app:
+
+    docker build --build-arg MY_IP=YOUR_ACTUAL_IP  -t my-expo-dev .  
+
+    docker run -it -p 19000:19000 -p 19001:19001 -p 19002:19002 my-expo-dev 
+
+
+run the server: 
+
+    docker build -t  tinder-server .
+
+    docker run -v "$(pwd)/api/Users/user-img:/server/api/Users/user-img" --network host -it --rm -p 3000:3000 tinder-server

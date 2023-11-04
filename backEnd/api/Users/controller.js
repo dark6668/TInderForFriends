@@ -101,7 +101,6 @@ class Users extends CRUD {
 	async login(req, res, errHandler) {
 		try {
 			const { name, password } = req.body;
-
 			super
 				.getAllData()
 				.then((result) => {
@@ -112,6 +111,7 @@ class Users extends CRUD {
 						);
 					});
 					if (isUserInSystem !== undefined) {
+						console.log(isUserInSystem.profile_image);
 						super.readFileLocal(isUserInSystem.profile_image).then((result) => {
 							isUserInSystem.profile_image = result;
 
