@@ -44,17 +44,18 @@ export default function CalendarPage(props) {
 				{yourEvent.length > 0 && (
 					<View style={styles.containerEvent}>
 						{yourEvent.map((item) => {
-							return selected === item.ActivityDate.split(" ")[0] ? (
+
+							return selected === item.ActivityDate.split("T")[0] ? (
 								<View key={item.ActivityID} style={styles.event}>
 									<Text style={styles.text}>Event: {item.ActivitName}</Text>
 									<Text style={styles.text}>
 										Location: {item.ActivityLocation}
 									</Text>
 									<Text style={styles.text}>
-										Date: {item.ActivityDate.split(" ")[0]}
+										Date: {item.ActivityDate.split("T")[0]}
 									</Text>
 									<Text style={styles.text}>
-										Time: {item.ActivityDate.split(" ")[1].slice(0, 5)}
+										Time: {item.ActivityDate.split("T")[1].slice(0, 5)}
 									</Text>
 									<Text style={styles.text}>
 										Organizer: {item.EventOrganizer}

@@ -111,7 +111,6 @@ class Users extends CRUD {
 						);
 					});
 					if (isUserInSystem !== undefined) {
-						console.log(isUserInSystem.profile_image);
 						super.readFileLocal(isUserInSystem.profile_image).then((result) => {
 							isUserInSystem.profile_image = result;
 

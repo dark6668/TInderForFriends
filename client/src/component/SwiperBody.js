@@ -8,6 +8,7 @@ export default function SwiperBody(props) {
 	const swiperRef = React.useRef(currentIndex);
 	const userId = props.userId;
 	const [currentIndex, setCurrentIndex] = React.useState(0);
+	
 	const renderCard = (user) => (
 		<View style={styles.container}>
 			<Image
@@ -15,9 +16,9 @@ export default function SwiperBody(props) {
 				style={styles.cardImge}
 			/>
 			<View style={styles.containerInfo}>
-				<Text style={styles.text}>Date: {user.date.split(" ")[0]}</Text>
+				<Text style={styles.text}>Date: {user.date.split("T")[0]}</Text>
 				<Text style={styles.text}>
-					Time: {user.date.split(" ")[1].slice(0, 5)}
+					Time: {user.date.split("T")[1].slice(0, 5)}
 				</Text>
 
 				<Text style={styles.text}>Instagram: {user.instagram}</Text>

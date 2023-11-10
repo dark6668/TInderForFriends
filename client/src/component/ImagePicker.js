@@ -15,6 +15,7 @@ export default function ImgPicker(props) {
 		const permissionCamera = await PermissionsAndroid.request(
 			PermissionsAndroid.PERMISSIONS.CAMERA,
 		);
+
 		const permissionGallery = await PermissionsAndroid.request(
 			PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
 		);
